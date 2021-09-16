@@ -35,7 +35,9 @@ Private URL As String = "http://172.20.10.2:19800/v1/"
 
 **YouTube:**
 
-[![Alt text](https://img.youtube.com/vi/Y-1HDR2k_fE/0.jpg)](https://youtu.be/Y-1HDR2k_fE)
+[![Alt text](https://img.youtube.com/vi/3wydFKQmbp0/0.jpg)](https://youtu.be/3wydFKQmbp0)
+
+[![Alt text](https://img.youtube.com/vi/YplEEQhUQ4Q/0.jpg)](https://youtu.be/YplEEQhUQ4Q)
 
 Made with ❤ in B4X
 
