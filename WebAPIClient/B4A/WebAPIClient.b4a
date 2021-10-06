@@ -26,7 +26,7 @@ Version=11
 #Region  Project Attributes 
 	#ApplicationLabel: WebAPI Client
 	#VersionCode: 1
-	#VersionName: 1.0.0
+	#VersionName: 1.00
 	'SupportedOrientations possible values: unspecified, landscape or portrait.
 	#SupportedOrientations: portrait
 	#CanInstallToExternalStorage: False

@@ -25,15 +25,21 @@ Version=7.2
 'Code module
 #Region  Project Attributes 
 	#ApplicationLabel: WebAPI Client
-	#Version: 1.0.0 
+	#Version: 1.0.1
 	'Orientation possible values: Portrait, LandscapeLeft, LandscapeRight and PortraitUpsideDown
 	#iPhoneOrientations: Portrait, LandscapeLeft, LandscapeRight
 	#iPadOrientations: Portrait, LandscapeLeft, LandscapeRight, PortraitUpsideDown
 	#Target: iPhone, iPad
 	#ATSEnabled: True
-	#MinVersion: 9
+	#MinVersion: 8
 #End Region
-
+#if RELEASE
+	#CertificateFile: ios_distribution.cer
+	#ProvisionFile: b4i_webapi_client_adhoc.mobileprovision
+#Else
+	#CertificateFile: ios_development.cer
+	#ProvisionFile: development.mobileprovision
+#End If
 Sub Process_Globals
 	Public App As Application
 	Public NavControl As NavigationController
