@@ -21,7 +21,7 @@
 1. Open the platform specific project file
 2. Edit the URL (in B4XMainPage module line #11) to point to your Web API server address
 ```
-Private URL As String = "http://172.20.10.2:19800/v1/"
+Private URL As String = "http://172.20.10.3:19800/v1/"
 ```
 3. Run the project in Debug or Release mode
 
