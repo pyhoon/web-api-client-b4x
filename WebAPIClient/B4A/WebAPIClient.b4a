@@ -13,20 +13,21 @@ Group=Default Group
 Library1=b4xpages
 Library2=b4xpreferencesdialog
 Library3=core
-Library4=xui views
-Library5=okhttputils2
-ManifestCode='This code will be applied to the manifest file during compilation.~\n~'You do not need to modify it in most cases.~\n~'See this link for for more information: https://www.b4x.com/forum/showthread.php?p=78136~\n~AddManifestText(~\n~<uses-sdk android:minSdkVersion="5" android:targetSdkVersion="29"/>~\n~<supports-screens android:largeScreens="true" ~\n~    android:normalScreens="true" ~\n~    android:smallScreens="true" ~\n~    android:anyDensity="true"/>)~\n~SetApplicationAttribute(android:icon, "@drawable/icon")~\n~SetApplicationAttribute(android:label, "$LABEL$")~\n~CreateResourceFromFile(Macro, Themes.LightTheme)~\n~'End of default text.~\n~CreateResourceFromFile(Macro, Core.NetworkClearText)
+Library4=okhttputils2
+Library5=xui views
+Library6=ime
+ManifestCode='This code will be applied to the manifest file during compilation.~\n~'You do not need to modify it in most cases.~\n~'See this link for for more information: https://www.b4x.com/forum/showthread.php?p=78136~\n~AddManifestText(~\n~<uses-sdk android:minSdkVersion="5" android:targetSdkVersion="29"/>~\n~<supports-screens android:largeScreens="true" ~\n~    android:normalScreens="true" ~\n~    android:smallScreens="true" ~\n~    android:anyDensity="true"/>)~\n~SetApplicationAttribute(android:icon, "@drawable/icon")~\n~SetApplicationAttribute(android:label, "$LABEL$")~\n~CreateResourceFromFile(Macro, Themes.LightTheme)~\n~'End of default text.~\n~SetActivityAttribute(main, android:windowSoftInputMode, adjustResize|stateHidden)~\n~CreateResourceFromFile(Macro, Core.NetworkClearText)
 Module1=|relative|..\B4XMainPage
 Module2=Starter
 NumberOfFiles=5
-NumberOfLibraries=5
+NumberOfLibraries=6
 NumberOfModules=2
 Version=11
 @EndOfDesignText@
 #Region  Project Attributes 
 	#ApplicationLabel: WebAPI Client
-	#VersionCode: 1
-	#VersionName: 1.00
+	#VersionCode: 3
+	#VersionName: 1.02
 	'SupportedOrientations possible values: unspecified, landscape or portrait.
 	#SupportedOrientations: portrait
 	#CanInstallToExternalStorage: False
@@ -44,12 +45,18 @@ Sub Process_Globals
 End Sub
 
 Sub Globals
-
+	Private ime As IME
 End Sub
 
 Sub Activity_Create(FirstTime As Boolean)
+	ime.Initialize("IME")
+	ime.AddHeightChangedEvent
 	Dim pm As B4XPagesManager
 	pm.Initialize(Activity)
+End Sub
+
+Sub IME_HeightChanged (NewHeight As Int, OldHeight As Int)
+	B4XPages.GetManager.RaiseEvent(B4XPages.GetManager.GetTopPage, "IME_HeightChanged", Array(NewHeight, OldHeight))
 End Sub
 
 'Template version: B4A-1.01
