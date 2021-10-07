@@ -14,7 +14,7 @@ Version=9.85
 Sub Class_Globals
 	Private Root As B4XView
 	Private xui As XUI
-	Private URL As String = "http://172.20.10.6:19800/v1/" ' "https://api.puterise.com:19900/v1/"
+	Private URL As String = "http://172.20.10.3:19800/v1/"
 	Private lblTitle As B4XView
 	Private lblBack As B4XView
 	Private clvRecord As CustomListView
@@ -50,6 +50,27 @@ Private Sub B4XPage_Created (Root1 As B4XView)
 	#End If
 End Sub
 
+Private Sub B4XPage_CloseRequest As ResumableSub
+	If xui.IsB4A Then
+		'back key in Android
+		If PrefDialog1.BackKeyPressed Then Return False
+		If PrefDialog2.BackKeyPressed Then Return False
+		If PrefDialog3.BackKeyPressed Then Return False
+	End If
+	If Viewing = "Product" Then
+		GetCategories
+		Return False
+	End If
+	Return True
+End Sub
+
+'Don't miss the code in the Main module + manifest editor.
+Private Sub IME_HeightChanged (NewHeight As Int, OldHeight As Int)
+	PrefDialog1.KeyboardHeightChanged(NewHeight)
+	PrefDialog2.KeyboardHeightChanged(NewHeight)
+	PrefDialog3.KeyboardHeightChanged(NewHeight)
+End Sub
+
 #If B4j
 Private Sub SetScrollPaneBackgroundColor(View As CustomListView, Color As Int)
 	Dim SP As JavaObject = View.GetBase.GetView(0)
@@ -64,12 +85,10 @@ Private Sub B4XPage_Appear
 	GetCategories
 End Sub
 
-Private Sub B4XPage_CloseRequest As ResumableSub
-	If Viewing = "Product" Then
-		GetCategories
-		Return False
-	End If
-	Return True
+Private Sub B4XPage_Resize(Width As Int, Height As Int)
+	If PrefDialog1.IsInitialized And PrefDialog1.Dialog.Visible Then PrefDialog1.Dialog.Resize(Width, Height)
+	If PrefDialog2.IsInitialized And PrefDialog2.Dialog.Visible Then PrefDialog2.Dialog.Resize(Width, Height)
+	If PrefDialog3.IsInitialized And PrefDialog3.Dialog.Visible Then PrefDialog3.Dialog.Resize(Width, Height)
 End Sub
 
 #If B4J
@@ -200,16 +219,17 @@ Private Sub CreateDialog1
 End Sub
 
 Private Sub CreateDialog2
-	Dim options As List
-	options.Initialize
+	Dim categories As List
+	categories.Initialize
 	For i = 0 To Category.Length - 1
-		options.Add(Category(i).Name)
+		categories.Add(Category(i).Name)
 	Next
 	PrefDialog2.Initialize(Root, "Product", 300dip, 250dip)
 	PrefDialog2.Dialog.OverlayColor = xui.Color_ARGB(128, 0, 10, 40)
 	PrefDialog2.Dialog.TitleBarHeight = 50dip
 	PrefDialog2.LoadFromJson(File.ReadString(File.DirAssets, "template_product.json"))
-	PrefDialog2.SetOptions("Category", options)
+	PrefDialog2.SetOptions("Category", categories)
+	PrefDialog2.SetEventsListener(Me, "PrefDialog2") '<-- must add to handle events.
 End Sub
 
 Private Sub CreateDialog3
@@ -219,7 +239,7 @@ Private Sub CreateDialog3
 	PrefDialog3.Dialog.TitleBarHeight = 50dip
 	PrefDialog3.Dialog.TitleBarColor = xui.Color_RGB(220, 20, 60)
 	PrefDialog3.AddSeparator("default")
-	End Sub
+End Sub
 
 Private Sub ShowDialog1 (Action As String, Item As Map)
 	If Action = "Add" Then
@@ -229,6 +249,21 @@ Private Sub ShowDialog1 (Action As String, Item As Map)
 	End If
 	PrefDialog1.Title = Action & " Category"
 	Dim sf As Object = PrefDialog1.ShowDialog(Item, "OK", "CANCEL")
+	#if B4A or B4i
+	PrefDialog1.Dialog.Base.Top = 100dip ' Make it lower
+	#Else
+	'Dim sp As ScrollPane = PrefDialog1.CustomListView1.sv
+	'sp.SetVScrollVisibility("NEVER")
+	Sleep(0)
+	PrefDialog1.CustomListView1.sv.Height = PrefDialog1.CustomListView1.sv.ScrollViewInnerPanel.Height + 10dip
+	#End If
+	' Fix Linux UI (Long Text Button)
+	Dim btnCancel As B4XView = PrefDialog1.Dialog.GetButton(xui.DialogResponse_Cancel)
+	btnCancel.Width = btnCancel.Width + 20dip
+	btnCancel.Left = btnCancel.Left - 20dip
+	btnCancel.TextColor = xui.Color_Red
+	Dim btnOk As B4XView = PrefDialog1.Dialog.GetButton(xui.DialogResponse_Positive)
+	btnOk.Left = btnOk.Left - 20dip
 	Wait For (sf) Complete (Result As Int)
 	If Result = xui.DialogResponse_Positive Then
 		If 0 = Item.Get("id") Then ' New row
@@ -236,7 +271,7 @@ Private Sub ShowDialog1 (Action As String, Item As Map)
 			Dim sd As Object = SendData("POST", "category", CategoryMap)
 			Wait For (sd) Complete (Data As Map)
 			If Data.Get("s") = "ok" Then
-				'Log(Data.Get("a")) ' 201 Created
+				Log(Data.Get("a")) ' 201 Created
 				Dim l As List = Data.Get("r")
 				Dim m As Map = l.Get(0)
 				xui.MsgboxAsync("New category created!", $"ID: ${m.Get("id")}"$)
@@ -268,6 +303,8 @@ Private Sub ShowDialog2 (Action As String, Item As Map)
 	End If
 	PrefDialog2.Title = Action & " Product"
 	Dim sf As Object = PrefDialog2.ShowDialog(Item, "OK", "CANCEL")
+	Sleep(0)
+	PrefDialog2.CustomListView1.sv.Height = PrefDialog2.CustomListView1.sv.ScrollViewInnerPanel.Height + 10dip
 	Wait For (sf) Complete (Result As Int)
 	If Result = xui.DialogResponse_Positive Then
 		If 0 = Item.Get("id") Then ' New row
@@ -301,19 +338,42 @@ Private Sub ShowDialog2 (Action As String, Item As Map)
 	End If
 End Sub
 
+Private Sub PrefDialog2_BeforeDialogDisplayed (Template As Object)
+	Try
+	' Fix Linux UI (Long Text Button)
+	Dim btnCancel As B4XView = PrefDialog2.Dialog.GetButton(xui.DialogResponse_Cancel)
+	btnCancel.Width = btnCancel.Width + 20dip
+	btnCancel.Left = btnCancel.Left - 20dip
+	btnCancel.TextColor = xui.Color_Red
+	Dim btnOk As B4XView = PrefDialog2.Dialog.GetButton(xui.DialogResponse_Positive)
+	If btnOk.IsInitialized Then
+		btnOk.Width = btnOk.Width + 20dip
+		btnOk.Left = btnCancel.Left - btnOk.Width
+	End If		
+	Catch
+		Log(LastException)
+	End Try
+End Sub
+
 Private Sub ShowDialog3 (Item As Map, Id As Long)
 	PrefDialog3.Title = "Delete " & Viewing
 	Dim sf As Object = PrefDialog3.ShowDialog(Item, "OK", "CANCEL")
 	#if B4A or B4i
-	PrefDialog3.Dialog.Base.Top = 200dip ' Make it lower
+	PrefDialog3.Dialog.Base.Top = 100dip ' Make it lower
 	#Else
-	Dim sp As ScrollPane = PrefDialog3.CustomListView1.sv
-	sp.SetVScrollVisibility("NEVER")
-	'sp.Pannable = False ' <-- still can scroll :)
+	' Fix Linux UI (Long Text Button)
+	'Dim sp As ScrollPane = PrefDialog3.CustomListView1.sv
+	'sp.SetVScrollVisibility("NEVER")
+	Sleep(0)
+	PrefDialog3.CustomListView1.sv.Height = PrefDialog3.CustomListView1.sv.ScrollViewInnerPanel.Height + 10dip
 	#End If
+	Dim btnCancel As B4XView = PrefDialog3.Dialog.GetButton(xui.DialogResponse_Cancel)
+	btnCancel.Width = btnCancel.Width + 20dip
+	btnCancel.Left = btnCancel.Left - 20dip
+	btnCancel.TextColor = xui.Color_Red
+	Dim btnOk As B4XView = PrefDialog3.Dialog.GetButton(xui.DialogResponse_Positive)
+	btnOk.Left = btnOk.Left - 20dip
 	PrefDialog3.CustomListView1.GetPanel(0).GetView(0).Text = Item.Get("Item")
-	'PrefDialog3.CustomListView1.GetPanel(0).GetView(0).Text = "   " & Item.Get("Item")
-	'PrefDialog3.CustomListView1.GetPanel(0).GetView(0).SetTextAlignment("CENTER", "LEFT")
 	#if b4i
 	PrefDialog3.CustomListView1.GetPanel(0).GetView(0).TextSize = 16 ' Text too small in ios
 	#else
