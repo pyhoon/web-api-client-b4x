@@ -32,6 +32,7 @@ Private URL As String = "http://172.20.10.2:19800/v1/"
 <img src="https://github.com/pyhoon/webapi-client-b4x/raw/main/Preview/B4i.png" title="B4i" />
 
 <img src="https://github.com/pyhoon/webapi-client-b4x/raw/main/Preview/B4J.png" title="B4J" />
+<img src="https://github.com/pyhoon/webapi-client-b4x/raw/main/Preview/ubuntu-desktop.png" title="Linux" />
 
 **YouTube:**
 
