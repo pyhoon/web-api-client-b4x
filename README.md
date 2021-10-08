@@ -40,6 +40,8 @@ Private URL As String = "http://172.20.10.3:19800/v1/"
 
 [![Alt text](https://img.youtube.com/vi/YplEEQhUQ4Q/0.jpg)](https://youtu.be/YplEEQhUQ4Q)
 
+[![Alt text](https://img.youtube.com/vi/p6d4P5tT6_0/0.jpg)](https://youtu.be/p6d4P5tT6_0)
+
 Made with ❤ in B4X
 
 Download and Develop with B4A for FREE: https://www.b4x.com/b4a.html
