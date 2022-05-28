@@ -31,7 +31,7 @@ B4J Web API server: https://github.com/pyhoon/webapi-b4j
 ```
 Private URL As String = "http://192.168.0.3:19800/v1/"
 ```
-3. Run the project in Debug or Release mode
+8. Run the project in Debug or Release mode
 
 **Preview:**
 
