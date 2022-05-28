@@ -14,9 +14,9 @@ B4J Web API server: https://github.com/pyhoon/webapi-b4j
 
 # Features:
 - CRUD based (CREATE, READ, UPDATE, DELETE)
-- B4XPages (single page)
+- B4XPages
 - B4X Sliding menu
-- b4X CustomListView
+- B4X CustomListView
 - B4X Loading indicator
 - B4X PreferencesDialog
 
@@ -26,7 +26,8 @@ B4J Web API server: https://github.com/pyhoon/webapi-b4j
 3. Copy to B4X Additional Libraries directory (to share with 3 platforms)
 4. Open either B4A, B4i or B4J IDE (Start with B4J is recommended)
 5. Click the IDE menu File -> New -> Web API Client
-6. Edit the URL (in B4XMainPage module line #11) to point to your Web API server address
+6. Create a new project with any name you like
+7. Edit the URL (in B4XMainPage module line #11) to point to your Web API server address
 ```
 Private URL As String = "http://192.168.0.3:19800/v1/"
 ```
