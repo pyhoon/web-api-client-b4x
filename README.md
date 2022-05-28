@@ -33,7 +33,7 @@ Private URL As String = "http://192.168.0.3:19800/v1/"
 ```
 8. Run the project in Debug or Release mode
 
-# Create B4X template from source:#
+# Create B4X template from source:
 1. Download the repo from GitHub
 2. Archive the files inside "Web API Client" directory as "Web API Client.zip" using WinRAR or 7-Zip
 3. Rename the extension from .zip to .b4xtemplate
