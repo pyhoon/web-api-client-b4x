@@ -37,7 +37,7 @@ Private URL As String = "http://192.168.0.3:19800/v1/"
 1. Download the source from GitHub and unarchive the zip file in a new directory
 2. Archive the files inside "Web API Client" directory as "Web API Client.zip" using WinRAR or 7-Zip
 3. Rename the extension from .zip to .b4xtemplate
-4. Copy the file to your B4X Additonal Library directory
+4. Copy the file to your B4X Additional Library directory
 
 **Preview:**
 
