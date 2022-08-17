@@ -1,0 +1,7 @@
+* linguist-vendored
+*.b4a linguist-vendored=false
+*.b4i linguist-vendored=false
+*.b4j linguist-vendored=false
+*.b4r linguist-vendored=false
+*.bas linguist-vendored=false
+*.b4xtemplate linguist-vendored=false
