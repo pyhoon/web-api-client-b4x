@@ -17,15 +17,15 @@ Library1=b4xpages
 Library2=b4xpreferencesdialog
 Library3=jcore
 Library4=jfx
-Library5=xui views
-Library6=jokhttputils2
+Library5=jokhttputils2
+Library6=xui views
 Module1=|relative|..\B4XMainPage
 NumberOfFiles=6
 NumberOfLibraries=6
 NumberOfModules=1
-Version=9.5
+Version=9.8
 @EndOfDesignText@
-' Version 1.0.3
+' Version 1.0.5
 #Region Project Attributes 
 	#MainFormWidth: 600
 	#MainFormHeight: 600 

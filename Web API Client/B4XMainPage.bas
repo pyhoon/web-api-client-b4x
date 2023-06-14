@@ -14,7 +14,7 @@ Version=9.85
 Sub Class_Globals
 	Private Root As B4XView
 	Private xui As XUI
-	Private URL As String = "http://192.168.0.3:19800/v1/" ' Change to your Web API Server URL
+	Private URL As String = "http://192.168.50.42:19800/v1/" ' Change to your Web API Server URL
 	Private lblTitle As B4XView
 	Private lblBack As B4XView
 	Private clvRecord As CustomListView
@@ -40,7 +40,6 @@ Public Sub Initialize
 '	B4XPages.GetManager.LogEvents = True
 End Sub
 
-'This event will be called once, before the page becomes visible.
 Private Sub B4XPage_Created (Root1 As B4XView)
 	Root = Root1
 	Root.LoadLayout("MainPage")
@@ -71,7 +70,7 @@ Private Sub IME_HeightChanged (NewHeight As Int, OldHeight As Int)
 	PrefDialog3.KeyboardHeightChanged(NewHeight)
 End Sub
 
-#If B4j
+#If B4J
 Private Sub SetScrollPaneBackgroundColor(View As CustomListView, Color As Int)
 	Dim SP As JavaObject = View.GetBase.GetView(0)
 	Dim V As B4XView = SP
@@ -104,7 +103,7 @@ End Sub
 Private Sub GetCategories
 	Try
 		Dim i As Long
-		Dim sd As Object = SendData("GET", "category", Null)
+		Dim sd As Object = SendData("GET", "categories", Null)
 		Wait For (sd) Complete (Data As Map)
 		If Data.Get("s") = "ok" Then
 			Dim Items As List = Data.Get("r")
@@ -135,7 +134,7 @@ End Sub
 
 Private Sub GetProducts
 	clvRecord.Clear
-	Dim sd As Object = SendData("GET", $"category/${CategoryId}/product"$, Null)
+	Dim sd As Object = SendData("GET", $"find/product/cid/${CategoryId}"$, Null)
 	Wait For (sd) Complete (Data As Map)
 	If Data.Get("s") = "ok" Then
 		If 204 = Data.Get("a") Then
@@ -146,8 +145,6 @@ Private Sub GetProducts
 				clvRecord.Add(CreateProductItems(Item.Get("product_code"), GetCategoryName(Item.Get("category_id")), Item.Get("product_name"), NumberFormat2(Item.Get("product_price"), 1, 2, 2, True), clvRecord.AsView.Width), Item.Get("id"))
 			Next
 		End If
-	Else
-		xui.MsgboxAsync(Data.Get("e"), "Error")
 	End If
 	Viewing = "Product"
 	lblTitle.Text = GetCategoryName(CategoryId)
@@ -268,10 +265,10 @@ Private Sub ShowDialog1 (Action As String, Item As Map)
 	If Result = xui.DialogResponse_Positive Then
 		If 0 = Item.Get("id") Then ' New row
 			Dim CategoryMap As Map = CreateMap("name": Item.Get("Category Name"))
-			Dim sd As Object = SendData("POST", "category", CategoryMap)
+			Dim sd As Object = SendData("POST", "categories", CategoryMap)
 			Wait For (sd) Complete (Data As Map)
 			If Data.Get("s") = "ok" Then
-				Log(Data.Get("a")) ' 201 Created
+				'Log(Data.Get("a")) ' 201 Created
 				Dim l As List = Data.Get("r")
 				Dim m As Map = l.Get(0)
 				xui.MsgboxAsync("New category created!", $"ID: ${m.Get("id")}"$)
@@ -281,7 +278,7 @@ Private Sub ShowDialog1 (Action As String, Item As Map)
 			End If
 		Else
 			Dim CategoryMap As Map = CreateMap("name": Item.Get("Category Name"))
-			Dim sd As Object = SendData("PUT", $"category/${Item.Get("id")}"$, CategoryMap)
+			Dim sd As Object = SendData("PUT", $"categories/${Item.Get("id")}"$, CategoryMap)
 			Wait For (sd) Complete (Data As Map)
 			If Data.Get("s") = "ok" Then
 				xui.MsgboxAsync("Category updated!", "Edit")
@@ -309,8 +306,8 @@ Private Sub ShowDialog2 (Action As String, Item As Map)
 	If Result = xui.DialogResponse_Positive Then
 		If 0 = Item.Get("id") Then ' New row
 			CategoryId = GetCategoryId(Item.Get("Category"))
-			Dim ProductMap As Map = CreateMap("code": Item.Get("Product Code"), "name": Item.Get("Product Name"), "price": Item.Get("Product Price"))
-			Dim sd As Object = SendData("POST", $"category/${CategoryId}/product"$, ProductMap)
+			Dim ProductMap As Map = CreateMap("cat_id": CategoryId, "code": Item.Get("Product Code"), "name": Item.Get("Product Name"), "price": Item.Get("Product Price"))
+			Dim sd As Object = SendData("POST", $"products"$, ProductMap)
 			Wait For (sd) Complete (Data As Map)
 			If Data.Get("s") = "ok" Then
 				'Log(Data.Get("a")) ' 201 Created
@@ -323,7 +320,7 @@ Private Sub ShowDialog2 (Action As String, Item As Map)
 		Else
 			Dim NewCategoryId As Long = GetCategoryId(Item.Get("Category"))
 			Dim ProductMap As Map = CreateMap("cat_id": NewCategoryId, "code": Item.Get("Product Code"), "name": Item.Get("Product Name"), "price": Item.Get("Product Price"))
-			Dim sd As Object = SendData("PUT", $"category/${CategoryId}/product/${Item.Get("id")}"$, ProductMap)
+			Dim sd As Object = SendData("PUT", $"products/${Item.Get("id")}"$, ProductMap)
 			Wait For (sd) Complete (Data As Map)
 			If Data.Get("s") = "ok" Then
 				xui.MsgboxAsync("Product updated!", "Edit")
@@ -340,16 +337,16 @@ End Sub
 
 Private Sub PrefDialog2_BeforeDialogDisplayed (Template As Object)
 	Try
-	' Fix Linux UI (Long Text Button)
-	Dim btnCancel As B4XView = PrefDialog2.Dialog.GetButton(xui.DialogResponse_Cancel)
-	btnCancel.Width = btnCancel.Width + 20dip
-	btnCancel.Left = btnCancel.Left - 20dip
-	btnCancel.TextColor = xui.Color_Red
-	Dim btnOk As B4XView = PrefDialog2.Dialog.GetButton(xui.DialogResponse_Positive)
-	If btnOk.IsInitialized Then
-		btnOk.Width = btnOk.Width + 20dip
-		btnOk.Left = btnCancel.Left - btnOk.Width
-	End If		
+		' Fix Linux UI (Long Text Button)
+		Dim btnCancel As B4XView = PrefDialog2.Dialog.GetButton(xui.DialogResponse_Cancel)
+		btnCancel.Width = btnCancel.Width + 20dip
+		btnCancel.Left = btnCancel.Left - 20dip
+		btnCancel.TextColor = xui.Color_Red
+		Dim btnOk As B4XView = PrefDialog2.Dialog.GetButton(xui.DialogResponse_Positive)
+		If btnOk.IsInitialized Then
+			btnOk.Width = btnOk.Width + 20dip
+			btnOk.Left = btnCancel.Left - btnOk.Width
+		End If
 	Catch
 		Log(LastException)
 	End Try
@@ -374,9 +371,9 @@ Private Sub ShowDialog3 (Item As Map, Id As Long)
 	Dim btnOk As B4XView = PrefDialog3.Dialog.GetButton(xui.DialogResponse_Positive)
 	btnOk.Left = btnOk.Left - 20dip
 	PrefDialog3.CustomListView1.GetPanel(0).GetView(0).Text = Item.Get("Item")
-	#if b4i
+	#If B4i
 	PrefDialog3.CustomListView1.GetPanel(0).GetView(0).TextSize = 16 ' Text too small in ios
-	#else
+	#Else
 	PrefDialog3.CustomListView1.GetPanel(0).GetView(0).TextSize = 15 ' 14
 	#End If
 	PrefDialog3.CustomListView1.GetPanel(0).GetView(0).Color = xui.Color_Transparent
@@ -384,9 +381,9 @@ Private Sub ShowDialog3 (Item As Map, Id As Long)
 	Wait For (sf) Complete (Result As Int)
 	If Result = xui.DialogResponse_Positive Then
 		If Viewing = "Product" Then
-			Dim sd As Object = SendData("DELETE", $"category/${CategoryId}/product/${Id}"$, Null)
+			Dim sd As Object = SendData("DELETE", $"products/${Id}"$, Null)
 		Else
-			Dim sd As Object = SendData("DELETE", $"category/${CategoryId}"$, Null)
+			Dim sd As Object = SendData("DELETE", $"categories/${CategoryId}"$, Null)
 		End If
 		Wait For (sd) Complete (Data As Map)
 		If Data.Get("s") = "ok" Then
@@ -456,19 +453,11 @@ Sub SendData (Method As String, EndPoint As String, Payload As Map) As Resumable
 		'Log("Link:" & Link)
 		indLoading.Show
 		j.Initialize("", Me)
-		Select Case Method.ToUpperCase
+		Select Method.ToUpperCase
 			Case "POST"
-				#if b4i
-				j.PostString(Link, Map2JSON(Payload)) ' old version of B4i
-				#else
 				j.PostString(Link, Payload.As(JSON).ToString)
-				#End If
 			Case "PUT"
-				#if b4i
-				j.PutString(Link, Map2JSON(Payload)) ' old version of B4i
-				#else
 				j.PutString(Link, Payload.As(JSON).ToString)
-				#End If
 			Case "DELETE"
 				j.Delete(Link)
 			Case Else ' GET
@@ -476,11 +465,7 @@ Sub SendData (Method As String, EndPoint As String, Payload As Map) As Resumable
 		End Select
 		Wait For (j) JobDone(j As HttpJob)
 		If j.Success Then
-			#if b4i
-			Data = JSON2Map(j.GetString) ' old version of B4i
-			#else
 			Data = j.GetString.As(JSON).ToMap 'ignore
-			#End If
 			Data.Put("a", j.Response.StatusCode)
 			#if B4J
 			lblStatus.Text = "Connected to " & URL
@@ -490,11 +475,7 @@ Sub SendData (Method As String, EndPoint As String, Payload As Map) As Resumable
 			lblStatus.TextColor = xui.Color_White
 		Else
 			If j.ErrorMessage.Contains($""s": "error""$) Then
-				#if b4i
-				Data = JSON2Map(j.ErrorMessage) ' old version of B4i
-				#else
 				Data = j.ErrorMessage.As(JSON).ToMap 'ignore
-				#End If
 				Data.Put("a", j.Response.StatusCode)
 			Else
 				Data = CreateMap("s": "error", "e": j.ErrorMessage, "m": "")
@@ -518,19 +499,3 @@ Sub SendData (Method As String, EndPoint As String, Payload As Map) As Resumable
 	indLoading.Hide
 	Return Data
 End Sub
-
-#if b4i
-Private Sub Map2JSON (Map As Map) As String
-	Dim gen As JSONGenerator
-	gen.Initialize(Map)
-	Return gen.ToString
-End Sub
-
-Private Sub JSON2Map (str As String) As Map
-	Dim par As JSONParser
-	par.Initialize(str)
-	Dim m As Map = par.NextObject
-	Dim ser As B4XSerializator
-	Return ser.ConvertBytesToObject(ser.ConvertObjectToBytes(m)) ' convert map to writable map in B4i
-End Sub
-#End If

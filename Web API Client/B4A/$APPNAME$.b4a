@@ -13,21 +13,21 @@ Group=Default Group
 Library1=b4xpages
 Library2=b4xpreferencesdialog
 Library3=core
-Library4=okhttputils2
-Library5=xui views
-Library6=ime
-ManifestCode='This code will be applied to the manifest file during compilation.~\n~'You do not need to modify it in most cases.~\n~'See this link for for more information: https://www.b4x.com/forum/showthread.php?p=78136~\n~AddManifestText(~\n~<uses-sdk android:minSdkVersion="5" android:targetSdkVersion="30"/>~\n~<supports-screens android:largeScreens="true" ~\n~    android:normalScreens="true" ~\n~    android:smallScreens="true" ~\n~    android:anyDensity="true"/>)~\n~SetApplicationAttribute(android:icon, "@drawable/icon")~\n~SetApplicationAttribute(android:label, "$LABEL$")~\n~CreateResourceFromFile(Macro, Themes.LightTheme)~\n~'End of default text.~\n~SetActivityAttribute(main, android:windowSoftInputMode, adjustResize|stateHidden)~\n~CreateResourceFromFile(Macro, Core.NetworkClearText) ' Comment this if using https protocol
+Library4=ime
+Library5=okhttputils2
+Library6=xui views
+ManifestCode='This code will be applied to the manifest file during compilation.~\n~'You do not need to modify it in most cases.~\n~'See this link for for more information: https://www.b4x.com/forum/showthread.php?p=78136~\n~AddManifestText(~\n~<uses-sdk android:minSdkVersion="5" android:targetSdkVersion="31"/>~\n~<supports-screens android:largeScreens="true" ~\n~    android:normalScreens="true" ~\n~    android:smallScreens="true" ~\n~    android:anyDensity="true"/>)~\n~SetApplicationAttribute(android:icon, "@drawable/icon")~\n~SetApplicationAttribute(android:label, "$LABEL$")~\n~CreateResourceFromFile(Macro, Themes.LightTheme)~\n~'End of default text.~\n~SetActivityAttribute(main, android:windowSoftInputMode, adjustResize|stateHidden)~\n~CreateResourceFromFile(Macro, Core.NetworkClearText) ' Comment this if using https protocol
 Module1=|relative|..\B4XMainPage
 Module2=Starter
 NumberOfFiles=5
 NumberOfLibraries=6
 NumberOfModules=2
-Version=11.5
+Version=12.2
 @EndOfDesignText@
 #Region  Project Attributes 
 	#ApplicationLabel: Web API Client
-	#VersionCode: 4
-	#VersionName: 1.0.3
+	#VersionCode: 6
+	#VersionName: 1.0.5
 	'SupportedOrientations possible values: unspecified, landscape or portrait.
 	#SupportedOrientations: portrait
 	#CanInstallToExternalStorage: False
@@ -92,9 +92,6 @@ End Sub
 public boolean _onCreateOptionsMenu(android.view.Menu menu) {
 	 processBA.raiseEvent(null, "create_menu", menu);
 	 return true;
-	
 }
 #End If
 #End Region
-
-'Program code should go into B4XMainPage and other pages.
