@@ -61,6 +61,6 @@ Private URL As String = "http://192.168.0.3:19800/v1/"
 
 Made with ❤ in B4X
 
-Download and Develop with B4A for FREE: https://www.b4x.com/b4a.html
-
-Download and Develop with B4J for FREE: https://www.b4x.com/b4j.html
+Download and Develop with **[B4A](https://www.b4x.com/b4a.html)** for FREE \
+Download and Develop with **[B4i](https://www.b4x.com/b4i.html)** without using Mac \
+Download and Develop with **[B4J](https://www.b4x.com/b4j.html)** for FREE
