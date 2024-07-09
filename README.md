@@ -9,11 +9,11 @@ Demonstrate how to consume Web API from [Web API Server](https://github.com/pyho
 
 **Depends on following libraries:** 
 
-**B4A:** B4XPages 1.10, B4XPreferencesDialog 1.73+, Core 11.00+, OkHttpUtils2 2.96+, XUI Views 2.52+
+**B4A:** B4XPages 1.10+, B4XPreferencesDialog 1.73+, Core 11.00+, OkHttpUtils2 2.96+, XUI Views 2.52+
 
-**B4i:** B4XPages 1.10, B4XPreferencesDialog 1.73+, iCore 7.01+, iHttpUtils2 2.96+, XUI Views 2.52+
+**B4i:** B4XPages 1.10+, B4XPreferencesDialog 1.73+, iCore 7.01+, iHttpUtils2 2.96+, XUI Views 2.52+
 
-**B4J:** B4XPages 1.10, B4XPreferencesDialog 1.73+, jCore 9.10+, jOkHttpUtils2 2.96+, XUI Views 2.52+, jFX 9.00+
+**B4J:** B4XPages 1.10+, B4XPreferencesDialog 1.73+, jCore 9.10+, jOkHttpUtils2 2.96+, XUI Views 2.52+, jFX 9.00+
 
 # Features:
 - CRUD based (CREATE, READ, UPDATE, DELETE)
