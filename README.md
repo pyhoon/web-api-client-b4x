@@ -1,11 +1,9 @@
 # Web API Client
 Version: 1.05
 
-Web API Client apps in B4X (Android, iOS, Desktop)
+Web API Client native apps for Mobile (Android and iOS) and Desktop (Windows, Linux and macOS)
 
-Demonstrate how to consume API from Web API server created by template
-
-B4J Web API server: https://github.com/pyhoon/webapi-b4j
+Demonstrate how to consume Web API from [Web API Server](https://github.com/pyhoon/web-api-server-b4j)
 
 ---
 
