@@ -9,7 +9,7 @@ Version=9.85
 'Ctrl + click to sync files: ide://run?file=%WINDIR%\System32\Robocopy.exe&args=..\..\Shared+Files&args=..\Files&FilesSync=True
 #End Region
 
-'Ctrl + click to export as zip: ide://run?File=%B4X%\Zipper.jar&Args=%PROJECT_NAME%.zip
+'Ctrl + click to export as zip: ide://run?File=%B4X%\Zipper.jar&Args=Web%20API%20Client%20%282.00%29.zip
 
 Sub Class_Globals
 	Private Root As B4XView
