@@ -1,13 +1,18 @@
 # Web API Client
-Latest Version: 2.00
+**Latest Version: 2.00**
 
 Web API Client native apps for Mobile (Android and iOS) and Desktop (Windows, Linux and macOS)
 
-Demonstrate how to consume Web API from [Web API Server](https://github.com/pyhoon/web-api-server-b4j)
+Demonstrate how to communicate with [Web API Server](https://github.com/pyhoon/web-api-server-b4j)
 
----
 
-**Depends on following libraries:** 
+## Version compatibility:
+
+Version 2.00: Web API Server 3.xx
+
+Version 1.05: Web API Server 1.xx, Web API Server 2.xx
+
+## Depends on following libraries: 
 
 **B4A:** B4XPages 1.10+, B4XPreferencesDialog 1.73+, Core 11.00+, OkHttpUtils2 2.96+, XUI Views 2.52+
 
@@ -15,7 +20,7 @@ Demonstrate how to consume Web API from [Web API Server](https://github.com/pyho
 
 **B4J:** B4XPages 1.10+, B4XPreferencesDialog 1.73+, jCore 9.10+, jOkHttpUtils2 2.96+, XUI Views 2.52+, jFX 9.00+
 
-# Features:
+## Features:
 - CRUD based (CREATE, READ, UPDATE, DELETE)
 - B4XPages
 - B4X Sliding menu
@@ -23,14 +28,13 @@ Demonstrate how to consume Web API from [Web API Server](https://github.com/pyho
 - B4X Loading indicator
 - B4X PreferencesDialog
 
-# How to run:
-1. Download the release version Web.API.Client.b4xtemplate
-2. Rename it to "Web API Client.b4xtemplate" (without the quotes)
-3. Copy to B4X Additional Libraries directory (to share with 3 platforms)
-4. Open either B4A, B4i or B4J IDE (Start with B4J is recommended)
-5. Click the IDE menu File -> New -> Web API Client
-6. Create a new project with any name you like
-7. Edit the URL (in B4XMainPage module line #11) to point to your Web API server address
+## How to run:
+1. Download the project template "Web API Client (x.xx).b4xtemplate"
+2. Copy to B4X Additional Libraries directory
+3. Open either B4A, B4i or B4J IDE (recommended to start with B4J)
+4. Click the IDE menu File -> New -> Web API Client (x.xx)
+5. Create a new project with any name you like
+6. Edit the URL (in B4XMainPage module line #11) to point to your Web API server address
 ```basic
 ' Version 1.x
 Private URL As String = "http://192.168.50.42:19800/v1/"
@@ -38,13 +42,8 @@ Private URL As String = "http://192.168.50.42:19800/v1/"
 ' Version 2.x
 Private URL As String = "http://192.168.50.42:8080/api/"
 ```
-8. Run the project in Debug or Release mode
-
-# Create B4X template from source:
-1. Download the source from GitHub and unarchive the zip file in a new directory
-2. Archive the files inside "Web API Client" directory as "Web API Client.zip" using WinRAR or 7-Zip
-3. Rename the extension from .zip to .b4xtemplate
-4. Copy the file to your B4X Additional Library directory
+7. Start Web API Server project in Release mode
+8. Run the client project in Debug mode
 
 **Preview:**
 
@@ -64,5 +63,5 @@ Private URL As String = "http://192.168.50.42:8080/api/"
 Made with ❤ in B4X
 
 Download and Develop with **[B4A](https://www.b4x.com/b4a.html)** for FREE \
-Download and Develop with **[B4i](https://www.b4x.com/b4i.html)** without using Mac \
-Download and Develop with **[B4J](https://www.b4x.com/b4j.html)** for FREE
+Download and Develop with **[B4J](https://www.b4x.com/b4j.html)** for FREE \
+Download and Develop with **[B4i](https://www.b4x.com/b4i.html)** without using Mac
