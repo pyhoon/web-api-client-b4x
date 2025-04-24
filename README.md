@@ -1,5 +1,5 @@
 # Web API Client
-Version: 1.05
+Latest Version: 2.00
 
 Web API Client native apps for Mobile (Android and iOS) and Desktop (Windows, Linux and macOS)
 
@@ -31,8 +31,12 @@ Demonstrate how to consume Web API from [Web API Server](https://github.com/pyho
 5. Click the IDE menu File -> New -> Web API Client
 6. Create a new project with any name you like
 7. Edit the URL (in B4XMainPage module line #11) to point to your Web API server address
-```
-Private URL As String = "http://192.168.0.3:19800/v1/"
+```basic
+' Version 1.x
+Private URL As String = "http://192.168.50.42:19800/v1/"
+
+' Version 2.x
+Private URL As String = "http://192.168.50.42:8080/api/"
 ```
 8. Run the project in Debug or Release mode
 
