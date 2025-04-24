@@ -8,9 +8,9 @@ Demonstrate how to communicate with [Web API Server](https://github.com/pyhoon/w
 
 ## Version compatibility:
 
-Version 2.00: Web API Server 3.xx
+Version 2.00: Web API Server 3.50
 
-Version 1.05: Web API Server 1.xx, Web API Server 2.xx
+Version 1.05: Web API Server 1.16, Web API Server 2.08
 
 ## Depends on following libraries: 
 
